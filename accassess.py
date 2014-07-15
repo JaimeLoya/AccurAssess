@@ -209,7 +209,7 @@ class AccAssess:
 
                 # Estimates half CI producer
                 comp1=diagonal[u_i]*(sum(mat_comp_1,axis=0)[u_i]-dia_comp_1[u_i])
-                comp2=(((np.sum(adjusted_matrix[u_i])-diagonal[u_i]))*(np.sum(adjusted_matrix,axis=0)[u_i]-diagonal[u_i])**2)/sum(m_e,axis=0)[u_i]
+                comp2=(((np.sum(adjusted_matrix[u_i])-diagonal[u_i]))*(np.sum(adjusted_matrix,axis=0)[u_i]-diagonal[u_i])**2)/sum(m_e,axis=1)[u_i]
                 hci_p=1.96*math.sqrt((diagonal[u_i]*(np.sum(adjusted_matrix,axis=0)[u_i])**-4)*(comp1+comp2))
                 hci_prod.append(hci_p)
 
@@ -308,6 +308,9 @@ class AccAssess:
             csv_sup.close()
             os.remove(filename1)
             os.remove(filename2)
+            
+            # Show a finished message
+            QMessageBox.information(self.iface.mainWindow(), QCoreApplication.translate('AccurAssess', "Finished"), QCoreApplication.translate('AccurAssess', "Operation completed successfully"))
         elif result == 1 and ref_layer.type()==QgsMapLayer.VectorLayer and comp_layer.type()==QgsMapLayer.VectorLayer:
             # Creates a CSV file to save all indices
             csv_matrix=open(filename+".csv",'wb')
@@ -439,7 +442,7 @@ class AccAssess:
 
                 # Calculate half CI producer
                 comp1=diagonal_shp[indice]*(np.sum(matr_comp,axis=0)[indice]-dia_comp_1[indice])
-                comp2=(((np.sum(adjusted_matrix[indice])-diagonal_shp[indice]))*(np.sum(adjusted_matrix,axis=0)[indice]-diagonal_shp[indice])**2)/sum(matrix_points,axis=0)[indice]
+                comp2=(((np.sum(adjusted_matrix[indice])-diagonal_shp[indice]))*(np.sum(adjusted_matrix,axis=0)[indice]-diagonal_shp[indice])**2)/sum(matrix_points,axis=1)[indice]
                 hci_p=1.96*math.sqrt((diagonal_shp[indice]*(np.sum(adjusted_matrix,axis=0)[indice])**-4)*(comp1+comp2))
                 hci_prod.append(hci_p)
            
@@ -538,6 +541,8 @@ class AccAssess:
             temp_files=[".dbf",".prj",".qpj",".shp",".shx"]
             for temp_file in temp_files:
                 os.remove(filename+temp_file)
+            # Show a finished message
+            QMessageBox.information(self.iface.mainWindow(), QCoreApplication.translate('AccurAssess', "Finished"), QCoreApplication.translate('AccurAssess', "Operation completed successfully"))
         # Displays an error message if the parameters are incorrect
         elif result == 1 and filename=="":
             QMessageBox.critical(self.iface.mainWindow(), QCoreApplication.translate('Error', "Error"), QCoreApplication.translate('Error', "Error try again, make sure of give all parameters"))
