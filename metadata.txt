@@ -18,6 +18,15 @@ email=jaimeloyac@gmail.com, jfmas@ciga.unam.mx
 
 # end of mandatory metadata
 
+#----------------------Take into account
+#The difference between both plugins is that Accuracy Assessment only process the raw matrix and does not take into account the sampling design used to select the reference data.
+#AccurAssess carries out a correction of bias of sampling before computing the accuracy indices (Method of Card 1982).
+#In brief, Accuracy Assessment will only give correct indices if the number of reference sample by class is proportional to the area of each class on the map 
+#(e.g. simple random or systematic sampling but not in case of stratified sampling except the rare case of a stratification which respects these proportions). 
+#AccurAssess correct the bias of sampling and will give correct results with simple random and stratified sampling.
+#Additionally, AccurAssess give the confidence intervals (CI) around the estimates of accuracy indices and gives corrected estimates of class area (also with CI).
+#see the paper for more details: http://www.hindawi.com/journals/geography/2014/372349/
+
 # Optional items:
 
 # Uncomment the following line and add your changelog entries:
