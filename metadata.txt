@@ -1,0 +1,39 @@
+# This file contains metadata for your plugin. Beginning
+# with version 1.8 this is the preferred way to supply information about a
+# plugin. The current method of embedding metadata in __init__.py will
+# be supported until version 2.0
+
+# This file should be included when you package your plugin.
+
+# Mandatory items:
+
+
+[general]
+name=AccurAssess
+qgisMinimumVersion=2.0
+description=Carry out the accuracy assessment of a thematic categorical map taking into account the sampling design.
+
+version=0.2
+author=Jaime Loya, Jean F Mas
+email=jaimeloyac@gmail.com, jfmas@ciga.unam.mx 
+
+# end of mandatory metadata
+
+# Optional items:
+
+# Uncomment the following line and add your changelog entries:
+# changelog=
+
+# tags are comma separated with spaces allowed
+tags= Sampling desing, vector, raster, accuracy
+
+homepage= http://www.ciga.unam.mx/sw/
+tracker= https://github.com/JaimeLoya/AccurAssess/issues
+repository= https://github.com/JaimeLoya/AccurAssess
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version
+deprecated=False
+
