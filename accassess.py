@@ -48,7 +48,11 @@ class AccAssess:
         self.plugin_dir = os.path.dirname(__file__)
         # initialize locale
         locale = QSettings().value("locale/userLocale")[0:2]
+<<<<<<< HEAD
         localePath = os.path.join(self.plugin_dir, 'i18n', 'AccurAssess_{}.qm'.format(locale))
+=======
+        localePath = os.path.join(self.plugin_dir, 'i18n', 'accassess_{}.qm'.format(locale))
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
 
         if os.path.exists(localePath):
             self.translator = QTranslator()
@@ -62,15 +66,24 @@ class AccAssess:
 
     def initGui(self):
         # Create action that will start plugin configuration
+<<<<<<< HEAD
         
         self.action = QAction(
             QIcon(":/plugins/AccurAssess/icon.png"),
+=======
+        self.action = QAction(
+            QIcon(":/plugins/accassess/icon.png"),
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             u"AccurAssess", self.iface.mainWindow())
         # connect the action to the run method
         self.action.triggered.connect(self.run)
 
         # Add toolbar button and menu item
+<<<<<<< HEAD
         
+=======
+        self.iface.addToolBarIcon(self.action)
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
         self.iface.addPluginToMenu(u"&AccurAssess", self.action)
         
         # Hook the select button to a file dialog
@@ -87,9 +100,12 @@ class AccAssess:
 
     # run method that performs all the real work
     def run(self):
+<<<<<<< HEAD
         cwd=os.getcwd()
         path=os.path.join(cwd,"icon.png")
 
+=======
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
         # populate the combo boxes with loaded layers
         self.dlg.initLayerCombobox( self.dlg.ui.referenceComboBox, 'key_of_default_layer' )
         self.dlg.initLayerCombobox( self.dlg.ui.comparisonComboBox, 'key_of_default_layer' )
@@ -212,6 +228,7 @@ class AccAssess:
                 hci_user.append(hci_u)
 
                 # Estimates half CI producer
+<<<<<<< HEAD
                 comp1=diagonal[u_i]*(np.sum(adjusted_matrix,axis=0)[u_i])**-4
                 comp2=diagonal[u_i]*(sum(mat_comp_1,axis=0)[u_i]-dia_comp_1[u_i])
                 comp3=(np.sum(adjusted_matrix[u_i])-diagonal[u_i])*(np.sum(adjusted_matrix,axis=0)[u_i]-diagonal[u_i])**2/sum(m_e,axis=1)[u_i]
@@ -219,6 +236,15 @@ class AccAssess:
                 hci_p=1.96*math.sqrt(comp1*(comp2+comp3))
                 hci_prod.append(hci_p)
 
+=======
+                comp1=diagonal[u_i]*(sum(mat_comp_1,axis=0)[u_i]-dia_comp_1[u_i])
+                comp2=(((np.sum(adjusted_matrix[u_i])-diagonal[u_i]))*(np.sum(adjusted_matrix,axis=0)[u_i]-diagonal[u_i])**2)/sum(m_e,axis=1)[u_i]
+                hci_p=1.96*math.sqrt((diagonal[u_i]*(np.sum(adjusted_matrix,axis=0)[u_i])**-4)*(comp1+comp2))
+                hci_prod.append(hci_p)
+
+            
+
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             ci_low_acc=[]
             ci_upp_acc=[]
 
@@ -312,13 +338,32 @@ class AccAssess:
             csv_sup.close()
             os.remove(filename1)
             os.remove(filename2)
+<<<<<<< HEAD
+=======
+            
+            # Show a finished message
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             QMessageBox.information(self.iface.mainWindow(), QCoreApplication.translate('AccurAssess', "Finished"), QCoreApplication.translate('AccurAssess', "Operation completed successfully"))
         elif result == 1 and ref_layer.type()==QgsMapLayer.VectorLayer and comp_layer.type()==QgsMapLayer.VectorLayer:
             # Creates a CSV file to save all indices
             csv_matrix=open(filename+".csv",'wb')
             writer_csv=csv.writer(csv_matrix)
             
+<<<<<<< HEAD
     
+=======
+            
+            # Calculates the area from each features in comparison layer
+            
+            areabypolygon=[]
+            clave_area=[]
+            for f in comp_layer.getFeatures():
+                clave_area.append(f[0])
+                area_polygon=f.geometry().area()
+                areabypolygon.append(f[0])
+                areabypolygon.append(area_polygon)
+           
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             
             # Make a intersect feature
             split_filename=filename.split(".")
@@ -330,7 +375,11 @@ class AccAssess:
             add_inter=QgsMapLayerRegistry.instance().addMapLayer(layer_inter)
 
           
+<<<<<<< HEAD
             # This stored in separate lists, each value in the intersect layer
+=======
+            # This stored in separate lists, each value in the layer
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             clave1=[]
             clave2=[]
             area_values=[]
@@ -351,6 +400,7 @@ class AccAssess:
             matrix=np.zeros((len(unique_class),len(unique_class)))
             
             # Makes the summary table by class
+<<<<<<< HEAD
 
             claves=[]
             sumas=[]
@@ -372,6 +422,26 @@ class AccAssess:
             sum_areas=[]
             for l in range(len(lista)):
                     sum_areas.append(lista[l][1])
+=======
+            sum_areas=[]
+            suma_shp=0
+            c=0
+            d=1
+            for m in range(len(unique_class)):
+                for n in range (len(areabypolygon)):
+                    try:
+                        val_area=int(areabypolygon[c])
+                        if val_area==unique_class[m]:
+                            suma_shp=suma_shp+float(areabypolygon[d])
+                    except:
+                        pass
+                    c=c+2
+                    d=d+2
+                c=0
+                d=1
+                sum_areas.append(suma_shp)
+                suma_shp=0
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
                 
             # Estimates the proportion area by class
             proportion_area=np.array(sum_areas)/np.sum(sum_areas)
@@ -436,12 +506,21 @@ class AccAssess:
                 hci_user.append(hci_u)
 
                 # Calculate half CI producer
+<<<<<<< HEAD
                 comp1=diagonal_shp[indice]*(np.sum(adjusted_matrix,axis=0)[indice])**-4
                 comp2=diagonal_shp[indice]*(np.sum(matr_comp,axis=0)[indice]-dia_comp_1[indice])
                 comp3=(((np.sum(adjusted_matrix[indice])-diagonal_shp[indice]))*(np.sum(adjusted_matrix,axis=0)[indice]-diagonal_shp[indice])**2)/sum(matrix_points,axis=1)[indice]
                 hci_p=1.96*math.sqrt(comp1*(comp2+comp3))
                 hci_prod.append(hci_p)
 
+=======
+                comp1=diagonal_shp[indice]*(np.sum(matr_comp,axis=0)[indice]-dia_comp_1[indice])
+                comp2=(((np.sum(adjusted_matrix[indice])-diagonal_shp[indice]))*(np.sum(adjusted_matrix,axis=0)[indice]-diagonal_shp[indice])**2)/sum(matrix_points,axis=1)[indice]
+                hci_p=1.96*math.sqrt((diagonal_shp[indice]*(np.sum(adjusted_matrix,axis=0)[indice])**-4)*(comp1+comp2))
+                hci_prod.append(hci_p)
+           
+          
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             
             ci_low_acc=[]
             ci_upp_acc=[]
@@ -536,6 +615,10 @@ class AccAssess:
             temp_files=[".dbf",".prj",".qpj",".shp",".shx"]
             for temp_file in temp_files:
                 os.remove(filename+temp_file)
+<<<<<<< HEAD
+=======
+            # Show a finished message
+>>>>>>> 09a91b074571053f9f6f7c0a210fe32b983de012
             QMessageBox.information(self.iface.mainWindow(), QCoreApplication.translate('AccurAssess', "Finished"), QCoreApplication.translate('AccurAssess', "Operation completed successfully"))
         # Displays an error message if the parameters are incorrect
         elif result == 1 and filename=="":
